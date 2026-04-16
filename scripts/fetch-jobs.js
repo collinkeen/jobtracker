@@ -1,8 +1,10 @@
 /**
- * fetch-jobs.js
- * Reads config.json, auto-generates feed URLs from keywords,
- * fetches all feeds, scores against resume using Claude,
- * and writes results to ../public/jobs.json
+ * fetch-jobs.js — Job Scout daily fetcher
+ * Uses sources that reliably work from GitHub Actions:
+ *   - Arbeitnow (tech/remote jobs RSS, no bot blocking)
+ *   - Jobicy (remote jobs JSON API)
+ *   - Greenhouse / Lever (direct company APIs)
+ *   - Indeed (attempted, may be blocked)
  */
 
 import fetch from "node-fetch";
@@ -12,12 +14,11 @@ import path from "path";
 import { fileURLToPath } from "url";
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
-const CONFIG_PATH = path.join(__dirname, "config.json");
-const OUTPUT_PATH = path.join(__dirname, "../public/jobs.json");
+const CONFIG_PATH  = path.join(__dirname, "config.json");
+const OUTPUT_PATH  = path.join(__dirname, "../public/jobs.json");
 
-// ── Load config ───────────────────────────────────────────────────────────────
 if (!fs.existsSync(CONFIG_PATH)) {
-  console.error("❌ config.json not found. Copy config.example.json to config.json and fill it in.");
+  console.error("❌ config.json not found.");
   process.exit(1);
 }
 
@@ -26,7 +27,7 @@ const { feeds = [], resume = "", keywords = [], location = "", maxJobsToScore = 
 const ANTHROPIC_KEY = process.env.ANTHROPIC_API_KEY;
 
 if (!ANTHROPIC_KEY) {
-  console.error("❌ ANTHROPIC_API_KEY environment variable not set.");
+  console.error("❌ ANTHROPIC_API_KEY not set.");
   process.exit(1);
 }
 
@@ -37,142 +38,147 @@ const parser = new XMLParser({
   isArray: (name) => ["item", "entry"].includes(name),
 });
 
-// ── URL builders ──────────────────────────────────────────────────────────────
-function buildIndeedRSS(query, loc = "") {
-  const q = encodeURIComponent(query);
-  const l = loc ? `&l=${encodeURIComponent(loc)}` : "";
-  // fromage=7 = posted in last 7 days; sort=date = newest first
-  return `https://www.indeed.com/rss?q=${q}${l}&sort=date&fromage=7`;
+// ── Helpers ───────────────────────────────────────────────────────────────────
+function stripHtml(str) {
+  return String(str)
+    .replace(/<[^>]+>/g, " ").replace(/&amp;/g, "&").replace(/&lt;/g, "<")
+    .replace(/&gt;/g, ">").replace(/&nbsp;/g, " ").replace(/&#\d+;/g, "")
+    .replace(/\s+/g, " ").trim();
 }
 
-function buildRemoteOKRSS(query) {
-  // RemoteOK has a reliable public JSON feed for remote jobs
-  const tag = encodeURIComponent(query.toLowerCase().replace(/\s+/g, "-"));
-  return `https://remoteok.com/remote-${tag}-jobs.json`;
-}
-
-function generateFeedsFromKeywords(kws, loc) {
-  const autoFeeds = [];
-  kws.forEach((kw, i) => {
-    // Indeed — primary source
-    autoFeeds.push({ id: `indeed-${i}`, name: `Indeed — ${kw}`, url: buildIndeedRSS(kw, loc), source: "indeed" });
-    // RemoteOK — good for remote/tech roles, reliable RSS
-    autoFeeds.push({ id: `remoteok-${i}`, name: `RemoteOK — ${kw}`, url: buildRemoteOKRSS(kw), source: "remoteok" });
+function dedupe(jobs) {
+  const seen = new Set();
+  return jobs.filter(j => {
+    const key = (j.title + j.company).toLowerCase().replace(/\s+/g, "");
+    if (seen.has(key)) return false;
+    seen.add(key); return true;
   });
-  return autoFeeds;
 }
 
-// ── Filter out non-job content ────────────────────────────────────────────────
-// Rejects articles, news, and other non-job content that can sneak into feeds
-const JOB_TITLE_SIGNALS = [
-  "engineer", "developer", "manager", "director", "vp ", "vice president",
-  "analyst", "designer", "lead", "head of", "specialist", "coordinator",
-  "consultant", "architect", "officer", "president", "associate", "intern",
-  "recruiter", "researcher", "scientist", "strategist", "executive",
-];
-const ARTICLE_SIGNALS = [
-  "how to", "why ", "what is", "top 10", "best ", "guide to", "tips for",
-  "report:", "survey:", "study:", "podcast", "webinar", "newsletter",
-  "announces", "launches", "raises", "funding", "billion", "acquisition",
-];
-
-function isJobPosting(title) {
-  const t = title.toLowerCase();
-  if (ARTICLE_SIGNALS.some(s => t.includes(s))) return false;
-  if (JOB_TITLE_SIGNALS.some(s => t.includes(s))) return true;
-  // If short and doesn't match article signals, give benefit of doubt
-  return title.length < 80;
+function matchesKeywords(job, kws) {
+  if (!kws.length) return true;
+  const hay = (job.title + " " + job.description + " " + job.company).toLowerCase();
+  return kws.some(kw => hay.includes(kw.toLowerCase()));
 }
 
-// ── Fetch RemoteOK (JSON API) ──────────────────────────────────────────────────
-async function fetchRemoteOK(url, feedName) {
+// ── Arbeitnow RSS (tech/remote jobs, no bot blocking) ─────────────────────────
+// Returns all tech jobs — we filter by keywords after fetching
+async function fetchArbeitnow() {
+  const url = "https://www.arbeitnow.com/rss";
+  console.log(`    Fetching Arbeitnow RSS...`);
+  try {
+    const res = await fetch(url, {
+      headers: { "User-Agent": "Mozilla/5.0", "Accept": "application/xml, text/xml" },
+      timeout: 20000,
+    });
+    console.log(`    HTTP ${res.status}`);
+    if (!res.ok) throw new Error(`HTTP ${res.status}`);
+    const text = await res.text();
+    console.log(`    ${text.length} chars received`);
+    const parsed = parser.parse(text);
+    const items = parsed?.rss?.channel?.item || [];
+    const list = Array.isArray(items) ? items : [items];
+    console.log(`    ${list.length} raw items`);
+    return list.map(item => ({
+      id: String(item.guid?.["#text"] || item.guid || Math.random()),
+      title: stripHtml(String(item.title?.["#text"] || item.title || "Untitled")),
+      company: stripHtml(String(item["author"] || item["dc:creator"] || "")),
+      link: item.link?.["#text"] || item.link || "#",
+      description: stripHtml(String(item.description?.["#text"] || item.description || "")).slice(0, 600),
+      pubDate: String(item.pubDate || ""),
+      feedName: "Arbeitnow",
+      source: "arbeitnow",
+      score: null, matchReason: "", keyMatches: [], gaps: [],
+    }));
+  } catch (e) {
+    console.warn(`    ⚠ Arbeitnow failed: ${e.message}`);
+    return [];
+  }
+}
+
+// ── Jobicy JSON API (remote jobs) ─────────────────────────────────────────────
+async function fetchJobicy(keyword) {
+  const q = encodeURIComponent(keyword);
+  const url = `https://jobicy.com/api/v2/remote-jobs?count=20&geo=usa&tag=${q}`;
+  console.log(`    Fetching Jobicy: ${keyword}`);
   try {
     const res = await fetch(url, {
       headers: { "User-Agent": "Mozilla/5.0", "Accept": "application/json" },
       timeout: 15000,
     });
+    console.log(`    HTTP ${res.status}`);
     if (!res.ok) throw new Error(`HTTP ${res.status}`);
     const data = await res.json();
-    // RemoteOK returns array; first item is a legal notice, skip it
-    const jobs = Array.isArray(data) ? data.filter(j => j.id && j.position) : [];
-    return jobs.slice(0, 20).map(j => ({
-      id: String(j.id),
-      title: j.position || "Untitled",
-      company: j.company || "",
-      link: j.url || `https://remoteok.com/l/${j.id}`,
-      description: stripHtml(j.description || j.tags?.join(", ") || "").slice(0, 600),
-      pubDate: j.date || "",
-      feedName,
-      source: "remoteok",
+    const jobs = data.jobs || [];
+    console.log(`    ${jobs.length} jobs`);
+    return jobs.map(j => ({
+      id: String(j.id || Math.random()),
+      title: j.jobTitle || "Untitled",
+      company: j.companyName || "",
+      link: j.url || "#",
+      description: stripHtml(j.jobDescription || j.jobExcerpt || "").slice(0, 600),
+      pubDate: j.pubDate || "",
+      feedName: `Jobicy — ${keyword}`,
+      source: "jobicy",
       score: null, matchReason: "", keyMatches: [], gaps: [],
     }));
   } catch (e) {
-    console.warn(`    ⚠ RemoteOK "${feedName}" failed: ${e.message}`);
+    console.warn(`    ⚠ Jobicy failed for "${keyword}": ${e.message}`);
     return [];
   }
 }
 
-// ── Fetch RSS ─────────────────────────────────────────────────────────────────
-async function fetchRSS(url, feedName, source) {
+// ── Indeed RSS (may be blocked by IP) ────────────────────────────────────────
+async function fetchIndeed(keyword, loc) {
+  const q = encodeURIComponent(keyword);
+  const l = loc ? `&l=${encodeURIComponent(loc)}` : "";
+  const url = `https://www.indeed.com/rss?q=${q}${l}&sort=date&fromage=7`;
+  console.log(`    Fetching Indeed: ${keyword}`);
   try {
-    console.log(`    URL: ${url}`);
     const res = await fetch(url, {
       headers: {
-        "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36",
+        "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 Chrome/120.0.0.0 Safari/537.36",
         "Accept": "text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8",
         "Accept-Language": "en-US,en;q=0.5",
-        "Cache-Control": "no-cache",
       },
       timeout: 20000,
       redirect: "follow",
     });
-
     console.log(`    HTTP ${res.status}`);
     if (!res.ok) throw new Error(`HTTP ${res.status}`);
-
     const text = await res.text();
-    console.log(`    Response: ${text.length} chars — preview: ${text.slice(0, 120).replace(/\n/g, " ")}`);
-
-    if (text.length < 100) { console.warn(`    ⚠ Response too short`); return []; }
-
+    console.log(`    ${text.length} chars — ${text.slice(0,80).replace(/\n/g," ")}`);
+    if (text.length < 200 || !text.includes("<item>")) {
+      console.warn(`    ⚠ Indeed returned no items (likely blocked)`);
+      return [];
+    }
     const parsed = parser.parse(text);
-    const channel = parsed?.rss?.channel || parsed?.feed || parsed?.["rdf:RDF"];
-    if (!channel) { console.warn(`    ⚠ No RSS channel found`); return []; }
-
-    const rawItems = channel?.item || channel?.entry || [];
-    const items = Array.isArray(rawItems) ? rawItems : rawItems ? [rawItems] : [];
-    console.log(`    Found ${items.length} items`);
-
-    return items.slice(0, 30).map((item) => {
-      const link = item.link?.["@_href"] || item.link?.["#text"] || item.link || "#";
-      return {
-        id: String(item.guid?.["#text"] || item.guid || item.id?.["#text"] || item.id || link || Math.random()),
-        title: stripHtml(String(item.title?.["#text"] || item.title || "Untitled")),
-        company: stripHtml(String(item["source"]?.["#text"] || item["source"] || item["author"] || item["a10:author"]?.name || "")),
-        link,
-        description: stripHtml(String(item.description?.["#text"] || item.description || item.summary?.["#text"] || item.summary || item["content:encoded"] || "")).slice(0, 600),
-        pubDate: String(item.pubDate || item.published || item.updated || ""),
-        feedName,
-        source,
-        score: null,
-        matchReason: "",
-        keyMatches: [],
-        gaps: [],
-      };
-    });
+    const items = parsed?.rss?.channel?.item || [];
+    const list = Array.isArray(items) ? items : [items];
+    return list.map(item => ({
+      id: String(item.guid?.["#text"] || item.guid || Math.random()),
+      title: stripHtml(String(item.title?.["#text"] || item.title || "Untitled")),
+      company: stripHtml(String(item["source"]?.["#text"] || item["source"] || "")),
+      link: item.link?.["#text"] || item.link || "#",
+      description: stripHtml(String(item.description?.["#text"] || item.description || "")).slice(0, 600),
+      pubDate: String(item.pubDate || ""),
+      feedName: `Indeed — ${keyword}`,
+      source: "indeed",
+      score: null, matchReason: "", keyMatches: [], gaps: [],
+    }));
   } catch (e) {
-    console.warn(`    ⚠ "${feedName}" failed: ${e.message}`);
+    console.warn(`    ⚠ Indeed failed for "${keyword}": ${e.message}`);
     return [];
   }
 }
 
-// ── Fetch Greenhouse ──────────────────────────────────────────────────────────
+// ── Greenhouse ────────────────────────────────────────────────────────────────
 async function fetchGreenhouse(slug, feedName) {
   try {
     const res = await fetch(`https://boards-api.greenhouse.io/v1/boards/${slug}/jobs?content=true`);
     if (!res.ok) throw new Error(`HTTP ${res.status}`);
     const data = await res.json();
-    return (data.jobs || []).slice(0, 30).map((j) => ({
+    return (data.jobs || []).slice(0, 30).map(j => ({
       id: String(j.id), title: j.title || "Untitled", company: slug,
       link: j.absolute_url || "#", description: stripHtml(j.content || "").slice(0, 600),
       pubDate: j.updated_at || "", feedName, source: "greenhouse",
@@ -181,13 +187,13 @@ async function fetchGreenhouse(slug, feedName) {
   } catch (e) { console.warn(`⚠ Greenhouse "${slug}": ${e.message}`); return []; }
 }
 
-// ── Fetch Lever ───────────────────────────────────────────────────────────────
+// ── Lever ─────────────────────────────────────────────────────────────────────
 async function fetchLever(slug, feedName) {
   try {
     const res = await fetch(`https://api.lever.co/v0/postings/${slug}?mode=json`);
     if (!res.ok) throw new Error(`HTTP ${res.status}`);
     const data = await res.json();
-    return (Array.isArray(data) ? data : []).slice(0, 30).map((j) => ({
+    return (Array.isArray(data) ? data : []).slice(0, 30).map(j => ({
       id: j.id || String(Math.random()), title: j.text || "Untitled", company: slug,
       link: j.hostedUrl || "#", description: (j.descriptionPlain || "").slice(0, 600),
       pubDate: j.createdAt ? new Date(j.createdAt).toISOString() : "", feedName, source: "lever",
@@ -199,14 +205,11 @@ async function fetchLever(slug, feedName) {
 // ── Score with Claude ─────────────────────────────────────────────────────────
 async function scoreJob(job, resumeText) {
   const prompt = `You are an ATS analyzer. Score this job against the resume. Return ONLY valid JSON, no markdown.
-
 RESUME: ${resumeText.slice(0, 1500)}
 JOB TITLE: ${job.title}
 COMPANY: ${job.company}
 DESCRIPTION: ${job.description}
-
-{"score":<0-100>,"matchReason":"<one sentence>","keyMatches":["match1","match2"],"gaps":["gap1","gap2"]}`;
-
+{"score":<0-100>,"matchReason":"<one sentence>","keyMatches":["match1","match2"],"gaps":["gap1"]}`;
   try {
     const res = await fetch("https://api.anthropic.com/v1/messages", {
       method: "POST",
@@ -215,7 +218,7 @@ DESCRIPTION: ${job.description}
     });
     const data = await res.json();
     if (data.error) throw new Error(data.error.message);
-    const text = data.content?.map((b) => b.text || "").join("") || "";
+    const text = data.content?.map(b => b.text || "").join("") || "";
     const match = text.match(/\{[\s\S]*\}/);
     if (!match) throw new Error("No JSON");
     return JSON.parse(match[0]);
@@ -225,70 +228,76 @@ DESCRIPTION: ${job.description}
   }
 }
 
-// ── Helpers ───────────────────────────────────────────────────────────────────
-function stripHtml(str) {
-  return String(str).replace(/<[^>]+>/g, " ").replace(/&amp;/g, "&").replace(/&lt;/g, "<")
-    .replace(/&gt;/g, ">").replace(/&nbsp;/g, " ").replace(/&#\d+;/g, "").replace(/\s+/g, " ").trim();
-}
-
-function dedupe(jobs) {
-  const seen = new Set();
-  return jobs.filter((j) => {
-    const key = (j.title + j.company).toLowerCase().replace(/\s+/g, "");
-    if (seen.has(key)) return false;
-    seen.add(key); return true;
-  });
-}
-
 // ── Main ──────────────────────────────────────────────────────────────────────
 async function main() {
-  console.log(`🚀 Job Scout starting — ${new Date().toISOString()}`);
+  console.log(`\n🚀 Job Scout — ${new Date().toISOString()}`);
   console.log(`🔑 Keywords: ${keywords.join(", ") || "none"}`);
-  console.log(`📍 Location: ${location || "none (nationwide)"}`);
-
-  const keywordFeeds = generateFeedsFromKeywords(keywords, location);
-  const manualFeeds = feeds.filter(f => f.source === "greenhouse" || f.source === "lever");
-  const allFeeds = [...keywordFeeds, ...manualFeeds];
-
-  console.log(`📡 ${allFeeds.length} feeds (${keywordFeeds.length} auto-generated, ${manualFeeds.length} manual)\n`);
+  console.log(`📍 Location: ${location || "nationwide/remote"}\n`);
 
   const allJobs = [];
-  for (const feed of allFeeds) {
-    console.log(`  ▶ ${feed.name}`);
-    let items = [];
-    if (feed.source === "greenhouse") items = await fetchGreenhouse(feed.url, feed.name);
-    else if (feed.source === "lever") items = await fetchLever(feed.url, feed.name);
-    else if (feed.source === "remoteok") items = await fetchRemoteOK(feed.url, feed.name);
-    else items = await fetchRSS(feed.url, feed.name, feed.source);
-    // Filter out articles and non-job content
-    items = items.filter(j => isJobPosting(j.title));
-    console.log(`    ✓ ${items.length} jobs\n`);
-    allJobs.push(...items);
+
+  // 1. Arbeitnow — fetch all, filter by keywords after
+  console.log("── Arbeitnow ─────────────────────────────────");
+  const arbeitnowJobs = await fetchArbeitnow();
+  const arbFiltered = arbeitnowJobs.filter(j => matchesKeywords(j, keywords));
+  console.log(`  ✓ ${arbFiltered.length} matching jobs (from ${arbeitnowJobs.length} total)\n`);
+  allJobs.push(...arbFiltered);
+
+  // 2. Jobicy — query each keyword
+  console.log("── Jobicy ────────────────────────────────────");
+  for (const kw of keywords) {
+    const jobs = await fetchJobicy(kw);
+    console.log(`  ✓ ${jobs.length} jobs for "${kw}"\n`);
+    allJobs.push(...jobs);
+  }
+
+  // 3. Indeed — query each keyword (may be blocked)
+  console.log("── Indeed ────────────────────────────────────");
+  for (const kw of keywords) {
+    const jobs = await fetchIndeed(kw, location);
+    console.log(`  ✓ ${jobs.length} jobs for "${kw}"\n`);
+    allJobs.push(...jobs);
+  }
+
+  // 4. Manual feeds (Greenhouse / Lever)
+  const manualFeeds = feeds.filter(f => f.source === "greenhouse" || f.source === "lever");
+  if (manualFeeds.length) {
+    console.log("── Company feeds ─────────────────────────────");
+    for (const feed of manualFeeds) {
+      console.log(`  ${feed.name}`);
+      let items = [];
+      if (feed.source === "greenhouse") items = await fetchGreenhouse(feed.url, feed.name);
+      else if (feed.source === "lever") items = await fetchLever(feed.url, feed.name);
+      const filtered = items.filter(j => matchesKeywords(j, keywords));
+      console.log(`  ✓ ${filtered.length} matching (${items.length} total)\n`);
+      allJobs.push(...filtered);
+    }
   }
 
   const deduped = dedupe(allJobs);
-  console.log(`📦 ${deduped.length} unique jobs after dedup`);
+  console.log(`\n📦 ${deduped.length} unique jobs total`);
 
   if (deduped.length === 0) {
-    console.log("⚠ No jobs found — RSS feeds may be blocking requests or returning empty results.");
-    console.log("  Indeed and Google News RSS can be rate-limited. Try running again in a few minutes.");
+    console.log("⚠ No jobs found. Writing empty output.");
+    const outDir = path.dirname(OUTPUT_PATH);
+    if (!fs.existsSync(outDir)) fs.mkdirSync(outDir, { recursive: true });
+    fs.writeFileSync(OUTPUT_PATH, JSON.stringify({ fetchedAt: new Date().toISOString(), totalJobs: 0, jobs: [] }, null, 2));
+    return;
   }
 
   // Score
-  if (resume.trim() && deduped.length > 0) {
+  if (resume.trim()) {
     const toScore = deduped.filter(j => j.description?.length > 50).slice(0, maxJobsToScore);
     console.log(`\n⭐ Scoring ${toScore.length} jobs...`);
     for (let i = 0; i < toScore.length; i++) {
       const job = toScore[i];
-      process.stdout.write(`  [${i + 1}/${toScore.length}] ${job.title.slice(0, 45).padEnd(45)} → `);
+      process.stdout.write(`  [${i+1}/${toScore.length}] ${job.title.slice(0,45).padEnd(45)} → `);
       const result = await scoreJob(job, resume);
       if (result) {
         const idx = deduped.findIndex(j => j.id === job.id);
         if (idx !== -1) Object.assign(deduped[idx], result);
         process.stdout.write(`${result.score}\n`);
-      } else {
-        process.stdout.write(`skipped\n`);
-      }
+      } else process.stdout.write(`skipped\n`);
       await new Promise(r => setTimeout(r, 300));
     }
   }
@@ -299,9 +308,8 @@ async function main() {
   if (!fs.existsSync(outDir)) fs.mkdirSync(outDir, { recursive: true });
   fs.writeFileSync(OUTPUT_PATH, JSON.stringify({ fetchedAt: new Date().toISOString(), totalJobs: deduped.length, jobs: deduped }, null, 2));
 
-  console.log(`\n✅ Done — ${deduped.length} jobs saved to public/jobs.json`);
-  if (deduped[0]) console.log(`   Top: "${deduped[0].title}" (${deduped[0].score ?? "unscored"})`);
+  console.log(`\n✅ Done — ${deduped.length} jobs written to public/jobs.json`);
+  if (deduped[0]) console.log(`   Top: "${deduped[0].title}" at ${deduped[0].company} (score: ${deduped[0].score ?? "unscored"})`);
 }
 
 main().catch(e => { console.error("❌ Fatal:", e); process.exit(1); });
-

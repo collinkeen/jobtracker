@@ -1,0 +1,39 @@
+name: Daily Job Fetch
+
+on:
+  schedule:
+    # Runs every weekday at 7:00 AM Eastern (12:00 UTC)
+    # To change time: 11=7amET, 12=8amET, 13=9amET, 14=10amET
+    - cron: '0 12 * * 1-5'
+  workflow_dispatch:  # Allows manual trigger from GitHub UI
+
+jobs:
+  fetch-and-score:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Install dependencies
+        run: cd scripts && npm install
+
+      - name: Fetch and score jobs
+        env:
+          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+        run: cd scripts && node fetch-jobs.js
+
+      - name: Commit results to repo
+        run: |
+          git config --global user.name "Job Scout Bot"
+          git config --global user.email "bot@job-scout"
+          git add public/jobs.json
+          git diff --staged --quiet || git commit -m "Daily job fetch — $(date +'%Y-%m-%d %H:%M UTC')"
+          git push

@@ -1,0 +1,11 @@
+{
+  "name": "job-scout-scripts",
+  "version": "1.0.0",
+  "description": "Daily job fetch and scoring scripts",
+  "main": "fetch-jobs.js",
+  "type": "module",
+  "dependencies": {
+    "node-fetch": "^3.3.2",
+    "fast-xml-parser": "^4.3.5"
+  }
+}

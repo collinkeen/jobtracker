@@ -1,0 +1,34 @@
+{
+  "feeds": [
+    {
+      "id": "f1",
+      "name": "Indeed — VP AI Enablement",
+      "url": "https://www.indeed.com/rss?q=VP+AI+Enablement&sort=date",
+      "source": "indeed",
+      "type": "rss"
+    },
+    {
+      "id": "f2",
+      "name": "Google Jobs — Director AI Strategy",
+      "url": "https://news.google.com/rss/search?q=Director+AI+Strategy+jobs&hl=en-US&gl=US&ceid=US:en",
+      "source": "rss",
+      "type": "rss"
+    },
+    {
+      "id": "f3",
+      "name": "Anthropic (Greenhouse)",
+      "url": "anthropic",
+      "source": "greenhouse",
+      "type": "greenhouse"
+    }
+  ],
+  "keywords": [
+    "ai enablement",
+    "director technology",
+    "vp technology",
+    "enterprise ai",
+    "digital transformation"
+  ],
+  "resume": "PASTE YOUR RESUME TEXT HERE — replace this entire string with your resume content",
+  "maxJobsToScore": 20
+}

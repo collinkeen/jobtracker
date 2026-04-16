@@ -41,21 +41,75 @@ const parser = new XMLParser({
 function buildIndeedRSS(query, loc = "") {
   const q = encodeURIComponent(query);
   const l = loc ? `&l=${encodeURIComponent(loc)}` : "";
-  return `https://www.indeed.com/rss?q=${q}${l}&sort=date&fromage=1`;
+  // fromage=7 = posted in last 7 days; sort=date = newest first
+  return `https://www.indeed.com/rss?q=${q}${l}&sort=date&fromage=7`;
 }
 
-function buildGoogleJobsRSS(query, loc = "") {
-  const q = encodeURIComponent(`"${query}"${loc ? ` ${loc}` : ""} job`);
-  return `https://news.google.com/rss/search?q=${q}&hl=en-US&gl=US&ceid=US:en`;
+function buildRemoteOKRSS(query) {
+  // RemoteOK has a reliable public JSON feed for remote jobs
+  const tag = encodeURIComponent(query.toLowerCase().replace(/\s+/g, "-"));
+  return `https://remoteok.com/remote-${tag}-jobs.json`;
 }
 
 function generateFeedsFromKeywords(kws, loc) {
   const autoFeeds = [];
   kws.forEach((kw, i) => {
+    // Indeed — primary source
     autoFeeds.push({ id: `indeed-${i}`, name: `Indeed — ${kw}`, url: buildIndeedRSS(kw, loc), source: "indeed" });
-    autoFeeds.push({ id: `google-${i}`, name: `Google Jobs — ${kw}`, url: buildGoogleJobsRSS(kw, loc), source: "rss" });
+    // RemoteOK — good for remote/tech roles, reliable RSS
+    autoFeeds.push({ id: `remoteok-${i}`, name: `RemoteOK — ${kw}`, url: buildRemoteOKRSS(kw), source: "remoteok" });
   });
   return autoFeeds;
+}
+
+// ── Filter out non-job content ────────────────────────────────────────────────
+// Rejects articles, news, and other non-job content that can sneak into feeds
+const JOB_TITLE_SIGNALS = [
+  "engineer", "developer", "manager", "director", "vp ", "vice president",
+  "analyst", "designer", "lead", "head of", "specialist", "coordinator",
+  "consultant", "architect", "officer", "president", "associate", "intern",
+  "recruiter", "researcher", "scientist", "strategist", "executive",
+];
+const ARTICLE_SIGNALS = [
+  "how to", "why ", "what is", "top 10", "best ", "guide to", "tips for",
+  "report:", "survey:", "study:", "podcast", "webinar", "newsletter",
+  "announces", "launches", "raises", "funding", "billion", "acquisition",
+];
+
+function isJobPosting(title) {
+  const t = title.toLowerCase();
+  if (ARTICLE_SIGNALS.some(s => t.includes(s))) return false;
+  if (JOB_TITLE_SIGNALS.some(s => t.includes(s))) return true;
+  // If short and doesn't match article signals, give benefit of doubt
+  return title.length < 80;
+}
+
+// ── Fetch RemoteOK (JSON API) ──────────────────────────────────────────────────
+async function fetchRemoteOK(url, feedName) {
+  try {
+    const res = await fetch(url, {
+      headers: { "User-Agent": "Mozilla/5.0", "Accept": "application/json" },
+      timeout: 15000,
+    });
+    if (!res.ok) throw new Error(`HTTP ${res.status}`);
+    const data = await res.json();
+    // RemoteOK returns array; first item is a legal notice, skip it
+    const jobs = Array.isArray(data) ? data.filter(j => j.id && j.position) : [];
+    return jobs.slice(0, 20).map(j => ({
+      id: String(j.id),
+      title: j.position || "Untitled",
+      company: j.company || "",
+      link: j.url || `https://remoteok.com/l/${j.id}`,
+      description: stripHtml(j.description || j.tags?.join(", ") || "").slice(0, 600),
+      pubDate: j.date || "",
+      feedName,
+      source: "remoteok",
+      score: null, matchReason: "", keyMatches: [], gaps: [],
+    }));
+  } catch (e) {
+    console.warn(`    ⚠ RemoteOK "${feedName}" failed: ${e.message}`);
+    return [];
+  }
 }
 
 // ── Fetch RSS ─────────────────────────────────────────────────────────────────
@@ -204,7 +258,10 @@ async function main() {
     let items = [];
     if (feed.source === "greenhouse") items = await fetchGreenhouse(feed.url, feed.name);
     else if (feed.source === "lever") items = await fetchLever(feed.url, feed.name);
+    else if (feed.source === "remoteok") items = await fetchRemoteOK(feed.url, feed.name);
     else items = await fetchRSS(feed.url, feed.name, feed.source);
+    // Filter out articles and non-job content
+    items = items.filter(j => isJobPosting(j.title));
     console.log(`    ✓ ${items.length} jobs\n`);
     allJobs.push(...items);
   }
@@ -247,3 +304,4 @@ async function main() {
 }
 
 main().catch(e => { console.error("❌ Fatal:", e); process.exit(1); });
+

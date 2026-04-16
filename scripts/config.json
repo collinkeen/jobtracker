@@ -1,106 +1,14 @@
 {
-  "feeds": [
-    {
-      "id": "gh-anthropic",
-      "name": "Anthropic (Greenhouse)",
-      "url": "anthropic",
-      "source": "greenhouse",
-      "type": "greenhouse"
-    }
-  ],
+  "feeds": [],
   "keywords": [
     "VP AI Enablement",
-    "Director Technology",
-    "Enterprise AI"
+    "Director Technology Strategy",
+    "Enterprise AI",
+    "AI Enablement Leader",
+    "Director Digital Transformation",
+    "Technology Innovation Director"
   ],
   "location": "Philadelphia PA",
- "resume":"EXECUTIVE SUMMARY Strategic technology and innovation leader with 25+ years in financial services, specializing in evaluating emerging capabilities, leading proofs of concept, and translating complex technical initiatives into clear business value. Deep experience shaping technology 
-   investment decisions, building ROI and value‐realization models, and aligning modernization efforts with enterprise risk posture and financial guardrails. Proven ability to partner across cybersecurity, engineering, product, finance, and executive leadership to prioritize 
-   innovation pipelines, assess operational and security implications, and guide adoption of new capabilities. Recognized for analytical rigor, executive communication, and influencing without authority in fast‐moving, highly regulated environments. 
-   EDUCATION & CERTIFICATIONS  Boston University — MS in Information Systems Coursework: Data Analysis, Software Engineering, Project Management, Algorithms, Advanced Probability Pennsylvania State University — BS in Marketing Johns Hopkins University — Data Science Certificate Machine learning fundamentals, analytics, and data-driven decision making Additional: Certified Facilitator — ATD | Advisory Board, Leading Disruptive Innovation Certificate Program — Rutgers University WORK EXPERIENCE 
-   SEI INVESTMENTS  Oaks, PA 
-   Senior Program Manager, Technology Delivery  Jun 2024 – Dec 2025 
-    ●  Led evaluation and pilot testing of emerging AI and automation capabilities, conducting structured proofs of concept to assess 
- feasibility, operational risk, and business value. 
- ●  Built value‐realization and adoption metrics to inform investment decisions and prioritize enterprise technology initiatives. 
- ●  Partnered with cybersecurity, risk, and compliance teams to ensure new capabilities aligned with enterprise risk posture, 
- data‐handling requirements, and regulatory expectations. 
- ●  Translated complex technical findings into concise executive narratives to support prioritization, funding, and portfolio governance. 
- ●  Strengthened decision‐making by identifying risks early, modeling impact, and presenting cost‐benefit tradeoffs to senior leadership. 
- ●  Led the Organizational Change Management Center of Excellence, building capability development programs and value‐driven 
- enablement services. 
- ●  Drove continuous improvement across the PMO, optimizing processes, documentation, and knowledge management to support 
- scalable innovation execution. 
- ●  Achieved a 20% increase in client satisfaction through structured measurement, insights analysis, and targeted improvements to 
- onboarding and delivery workflows. 
- Director of Collaborative Design  Jun 2022 – Aug 2024 
- ●  Directed enterprise innovation and modernization initiatives, guiding cross‐functional teams through early‐stage capability 
- assessments, pilot programs, and POCs. Conducted strategic research on emerging technology trends, synthesizing insights into 
- actionable recommendations that shaped the innovation and investment pipeline. 
- ●  Facilitated over 50 workshops to evaluate business problems, identify modernization opportunities, and define value‐realization 
- criteria for new capabilities. 
- ●  Partnered with senior executives to define innovation priorities, success metrics, and governance structures for evaluating new 
- technology investments. 
- ●  Delivered business capability solutions with 90%+ on‐time delivery by applying structured prioritization, demand intake, and 
- decision‐making frameworks. 
- ●  Advised external organizations on innovation strategy, digital transformation, and value‐driven technology adoption. 
- Director, Technology Strategy & Architecture  Oct 2006 – Jun 2022 
- ●  Led long‐term technology strategy and investment planning for SEI’s Institutional group, aligning platform modernization with 
- enterprise risk posture, financial constraints, and business priorities. Evaluated emerging technologies and built ROI models, 
- cost‐benefit analyses, and value‐realization frameworks to guide investment decisions. 
- ●  Reduced vendor spend and improved operational efficiency by consolidating platforms, eliminating redundant code, and 
- strengthening architectural governance. 
- ●  Piloted new methods and tools to assess operational risk, efficiency gains, and scalability of emerging capabilities. 
- ●  Communicated complex technical and financial insights to senior executives, enabling informed decision‐making across a matrixed 
- organization. 
- ●  Implemented Jira and Confluence to improve process automation, governance, and transparency across the technology portfolio. 
- ●  Developed SQL and .NET applications to deliver real‐time analytics and insights supporting investment and operational decisions. 
- NEXUS CONSULTING 
- Consultant/Project Lead  (fully assigned to DuPont)  2002 – Oct 2006 
- ●  Led redesign and modernization of DuPont’s external web presence, including UI improvements, site architecture updates, and 
- alignment with new corporate branding. 
- ●  Served as project lead and developer for a new intranet platform built with .NET, ASP, SQL, and JavaScript, improving internal 
- communication and workflow efficiency. 
- ●  Managed maintenance and enhancements for customer‐facing websites, optimizing performance, usability, and content delivery. 
- ●  Delivered analytics and performance insights to senior marketing leadership, informing digital strategy and campaign decisions. 
- ●  Supported early digital marketing initiatives, including SEO optimization and analytics for the company’s first Google AdSense 
- campaign 
- COMPUTER SCIENCE CORPORATION 
- Senior Consultant  1999 – 2001 
- ●  Developed early B2B web applications using HTML, SQL, and ASP within a CMM‐rated SDLC environment. 
- ●  Supported enterprise users by leading a two‐person help desk for a 400‐employee office, resolving hardware and software issues. 
- ●  Contributed to UI/UX elements for production websites and marketing assets. 
- ●  Completed intensive 8‐week technical training covering SQL, Visual Basic, C++, COBOL, and web development fundamentals. 
- THE VANGUARD GROUP 
- Business Analyst  1996 – 1999 
- ●  Led requirements, prioritization, and testing for custom statement‐generation software used by 40+ plan administrators. 
- ●  Designed and delivered training programs for internal users, improving adoption and operational accuracy. 
- ●  Participated in full SDLC activities including beta, unit, and UAT testing. 
- ●  Earned NASD Series 6 and 63 licenses to support client service and product knowledge. 
- ADDITIONAL SKILLS 
- Cyber / Innovation / Value 
- Management 
- ●  Emerging technology evaluation 
- ●  Proofs of concept (POCs) 
- ●  Cybersecurity awareness & governance 
- alignment 
- ●  ROI modeling & value‐realization 
- frameworks 
- ●  Portfolio governance & financial 
- guardrails 
- ●  Strategic research & trend analysis 
- ●  Executive narrative development 
- ●  Data‐driven decision‐making 
- Technical & Analytical 
- ●  SQL, JavaScript, HTML/CSS, React 
- ●  System architecture & SDLC 
- ●  Data analysis & visualization 
- ●  Cloud‐enabled application delivery 
- Leadership & Influence 
- ●  Cross‐functional collaboration 
- ●  Stakeholder management 
- ●  Executive communication 
- ●  Organizational change & capability 
- development 
- ●  Innovation strategy & design thinking",
-"maxJobsToScore":20
+  "resume": "EXECUTIVE SUMMARY Strategic technology and innovation leader with 25+ years in financial services, specializing in evaluating emerging capabilities, leading proofs of concept, and translating complex technical initiatives into clear business value. Deep experience shaping technology investment decisions, building ROI and value-realization models, and aligning modernization efforts with enterprise risk posture and financial guardrails. Proven ability to partner across cybersecurity, engineering, product, finance, and executive leadership to prioritize innovation pipelines, assess operational and security implications, and guide adoption of new capabilities. Recognized for analytical rigor, executive communication, and influencing without authority in fast-moving, highly regulated environments. EDUCATION & CERTIFICATIONS Boston University - MS in Information Systems. Coursework: Data Analysis, Software Engineering, Project Management, Algorithms, Advanced Probability. Pennsylvania State University - BS in Marketing. Johns Hopkins University - Data Science Certificate. Machine learning fundamentals, analytics, and data-driven decision making. Additional: Certified Facilitator - ATD | Advisory Board, Leading Disruptive Innovation Certificate Program - Rutgers University. WORK EXPERIENCE SEI INVESTMENTS Oaks, PA. Senior Program Manager, Technology Delivery Jun 2024 - Dec 2025. Led evaluation and pilot testing of emerging AI and automation capabilities, conducting structured proofs of concept to assess feasibility, operational risk, and business value. Built value-realization and adoption metrics to inform investment decisions and prioritize enterprise technology initiatives. Partnered with cybersecurity, risk, and compliance teams to ensure new capabilities aligned with enterprise risk posture, data-handling requirements, and regulatory expectations. Translated complex technical findings into concise executive narratives to support prioritization, funding, and portfolio governance. Strengthened decision-making by identifying risks early, modeling impact, and presenting cost-benefit tradeoffs to senior leadership. Led the Organizational Change Management Center of Excellence, building capability development programs and value-driven enablement services. Drove continuous improvement across the PMO, optimizing processes, documentation, and knowledge management to support scalable innovation execution. Achieved a 20% increase in client satisfaction through structured measurement, insights analysis, and targeted improvements to onboarding and delivery workflows. Director of Collaborative Design Jun 2022 - Aug 2024. Directed enterprise innovation and modernization initiatives, guiding cross-functional teams through early-stage capability assessments, pilot programs, and POCs. Conducted strategic research on emerging technology trends, synthesizing insights into actionable recommendations that shaped the innovation and investment pipeline. Facilitated over 50 workshops to evaluate business problems, identify modernization opportunities, and define value-realization criteria for new capabilities. Partnered with senior executives to define innovation priorities, success metrics, and governance structures for evaluating new technology investments. Delivered business capability solutions with 90%+ on-time delivery by applying structured prioritization, demand intake, and decision-making frameworks. Advised external organizations on innovation strategy, digital transformation, and value-driven technology adoption. Director, Technology Strategy & Architecture Oct 2006 - Jun 2022. Led long-term technology strategy and investment planning for SEI Institutional group, aligning platform modernization with enterprise risk posture, financial constraints, and business priorities. Evaluated emerging technologies and built ROI models, cost-benefit analyses, and value-realization frameworks to guide investment decisions. Reduced vendor spend and improved operational efficiency by consolidating platforms, eliminating redundant code, and strengthening architectural governance. Piloted new methods and tools to assess operational risk, efficiency gains, and scalability of emerging capabilities. Communicated complex technical and financial insights to senior executives, enabling informed decision-making across a matrixed organization. Implemented Jira and Confluence to improve process automation, governance, and transparency across the technology portfolio. Developed SQL and .NET applications to deliver real-time analytics and insights supporting investment and operational decisions. NEXUS CONSULTING Consultant/Project Lead (fully assigned to DuPont) 2002 - Oct 2006. Led redesign and modernization of DuPont external web presence. Served as project lead and developer for a new intranet platform built with .NET, ASP, SQL, and JavaScript. Managed maintenance and enhancements for customer-facing websites. Delivered analytics and performance insights to senior marketing leadership. COMPUTER SCIENCE CORPORATION Senior Consultant 1999 - 2001. Developed early B2B web applications using HTML, SQL, and ASP within a CMM-rated SDLC environment. THE VANGUARD GROUP Business Analyst 1996 - 1999. Led requirements, prioritization, and testing for custom statement-generation software used by 40+ plan administrators. Earned NASD Series 6 and 63 licenses. ADDITIONAL SKILLS: Emerging technology evaluation, Proofs of concept (POCs), Cybersecurity awareness and governance alignment, ROI modeling and value-realization frameworks, Portfolio governance and financial guardrails, Strategic research and trend analysis, Executive narrative development, Data-driven decision-making, SQL, JavaScript, HTML/CSS, React, System architecture and SDLC, Data analysis and visualization, Cloud-enabled application delivery, Cross-functional collaboration, Stakeholder management, Executive communication, Organizational change and capability development, Innovation strategy and design thinking.",
+  "maxJobsToScore": 20
+}

@@ -1,6 +1,6 @@
 {
-  "fetchedAt": "2026-04-21T13:04:21.164Z",
-  "totalJobs": 23,
+  "fetchedAt": "2026-04-22T13:06:26.416Z",
+  "totalJobs": 24,
   "jobs": [
     {
       "id": "142245",
@@ -276,6 +276,20 @@
       "description": "Powering Performance Marketplaces in Digital Media QuinStreet is a pioneer in powering decentralized online marketplaces that match searchers and “research and compare” consumers with brands . We run these virtual- and private-label marketplaces in one of the nation’s largest media networks. Our industry leading segmentation and AI-driven matching technologies help consumers find better solutions and brands faster. They allow brands to target and reach in-market customer prospects with pinpoint segment-by-segment accuracy, and to pay only for performance results. Our campaign-results-driven ma",
       "pubDate": "2026-03-25T14:09:15+00:00",
       "feedName": "Jobicy — director",
+      "source": "jobicy",
+      "score": null,
+      "matchReason": "",
+      "keyMatches": [],
+      "gaps": []
+    },
+    {
+      "id": "142297",
+      "title": "HR Workday Governance, Integration & Enablement Lead",
+      "company": "NielsenIQ",
+      "link": "https://jobicy.com/jobs/142297-hr-workday-governance-integration-enablement-lead",
+      "description": "Company Description #LI-Remote Job Description This role owns the operating model for how Workday work is requested, prioritized, and delivered across HR. Sitting between HR Centers of Excellence (COEs) and HR Technology, it translates business needs into well-defined requirements, manages dependencies between teams, and ensures Workday investment is sequenced against capacity and aligned to HR’s strategic priorities. Success looks like: every piece of Workday work coming through a consistent process, the HR roadmap reflecting real priorities and realistic timelines, HR teams building stronger",
+      "pubDate": "2026-04-22T01:55:39+00:00",
+      "feedName": "Jobicy — enablement",
       "source": "jobicy",
       "score": null,
       "matchReason": "",

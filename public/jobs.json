@@ -1,7 +1,21 @@
 {
-  "fetchedAt": "2026-05-04T13:24:50.484Z",
+  "fetchedAt": "2026-05-05T13:17:54.493Z",
   "totalJobs": 25,
   "jobs": [
+    {
+      "id": "143156",
+      "title": "Senior Director, Customer Experience & Logistics",
+      "company": "Great Minds",
+      "link": "https://jobicy.com/jobs/143156-senior-director-customer-experience-logistics",
+      "description": "Who We Are Great Minds is a high-growth, mission-driven organization founded by educators in 2007. As a for-profit, Public Benefit Corporation, we believe all students deserve access to meaningful, challenging content—and all teachers deserve tools that are intuitive, effective, and built for the realities of today’s classrooms. We develop high-quality, knowledge-rich math, science and ELA curricula grounded in research and designed in collaboration with educators. Our materials reflect real classroom needs and are built to drive lasting student outcomes. We are committed to usability, coheren",
+      "pubDate": "2026-05-05T06:44:02+00:00",
+      "feedName": "Jobicy — director",
+      "source": "jobicy",
+      "score": null,
+      "matchReason": "",
+      "keyMatches": [],
+      "gaps": []
+    },
     {
       "id": "143048",
       "title": "Senior Director, Biostatistics",
@@ -261,20 +275,6 @@
       "link": "https://jobicy.com/jobs/141884-regional-director-healthcare-illinois",
       "description": "About Zscaler Zscaler accelerates digital transformation to ensure our customers can be more agile, efficient, resilient, and secure. As an AI-forward enterprise , we are constantly pushing the envelope, leveraging the world’s largest security data lake to power our cloud-native Zero Trust Exchange platform. This innovation protects our customers from cyberattacks and data loss by securely connecting users, devices, and applications in any location. Here, impact in your role matters more than title and trust is built on results. We say, impact over activity. We seek innovators who actively use",
       "pubDate": "2026-04-14T04:44:01+00:00",
-      "feedName": "Jobicy — director",
-      "source": "jobicy",
-      "score": null,
-      "matchReason": "",
-      "keyMatches": [],
-      "gaps": []
-    },
-    {
-      "id": "141882",
-      "title": "Product Director, Common Voice (12 month Fixed-Term)",
-      "company": "Mozilla",
-      "link": "https://jobicy.com/jobs/141882-product-director-common-voice-12-month-fixed-term",
-      "description": "Product Director, Common Voice (12 month Fixed-Term) Mozilla Foundation is a non-profit building a better technology future — powered by people, open by design, fueled by imagination. We deliver people-first alternatives to today’s extractive systems. We build side by side with developers, innovators and advocates, united in the belief that a better technology future is not only possible — it’s ours to create. Team The Tech Platforms team stewards and evolves shared technology platforms that power Mozilla Foundation programs and enable effective, secure, and scalable ways of working. Within th",
-      "pubDate": "2026-04-14T04:43:58+00:00",
       "feedName": "Jobicy — director",
       "source": "jobicy",
       "score": null,

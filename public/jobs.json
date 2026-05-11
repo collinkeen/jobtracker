@@ -1,7 +1,21 @@
 {
-  "fetchedAt": "2026-05-08T13:11:58.008Z",
-  "totalJobs": 25,
+  "fetchedAt": "2026-05-11T14:30:08.590Z",
+  "totalJobs": 24,
   "jobs": [
+    {
+      "id": "143421",
+      "title": "Associate Director, Marketing – Healthcare Professional (HCP) / Customer Adolescent (age 9-18) Strategy Lead for HPV",
+      "company": "MSD",
+      "link": "https://jobicy.com/jobs/143421-associate-director-marketing-healthcare-professional-hcp-customer-adolescent-age-9-18-strategy-lead-for-hpv",
+      "description": "Job Description Associate Director, Marketing – Healthcare Professional (HCP) Strategy Lead, HPV Adolescent Job Description in Primary Posting Language (Include Requirements for Education, Experience and Skills) Role Summary: The Associate Director, HCP Strategy Lead, owns the marketing strategy for the HPV Adolescent HCP segment in alignment with the brands opportunity spaces. This role drives the end-to-end HCP approach - from insight generation to strategy development, path-to-recommendation, and content & channel plans through omnichannel (Sales Force and NPP) delivery - to increase intent",
+      "pubDate": "2026-05-08T16:29:10+00:00",
+      "feedName": "Jobicy — director",
+      "source": "jobicy",
+      "score": null,
+      "matchReason": "",
+      "keyMatches": [],
+      "gaps": []
+    },
     {
       "id": "143323",
       "title": "Director, Customer Success – West",
@@ -269,40 +283,12 @@
       "gaps": []
     },
     {
-      "id": "141889",
-      "title": "Director – Data Security Specialist",
-      "company": "Zscaler",
-      "link": "https://jobicy.com/jobs/141889-director-data-security-specialist",
-      "description": "About Zscaler Zscaler accelerates digital transformation to ensure our customers can be more agile, efficient, resilient, and secure. As an AI-forward enterprise , we are constantly pushing the envelope, leveraging the world’s largest security data lake to power our cloud-native Zero Trust Exchange platform. This innovation protects our customers from cyberattacks and data loss by securely connecting users, devices, and applications in any location. Here, impact in your role matters more than title and trust is built on results. We say, impact over activity. We seek innovators who actively use",
-      "pubDate": "2026-04-14T04:44:09+00:00",
-      "feedName": "Jobicy — director",
-      "source": "jobicy",
-      "score": null,
-      "matchReason": "",
-      "keyMatches": [],
-      "gaps": []
-    },
-    {
       "id": "142411",
       "title": "Manager, Customer Enablement",
       "company": "Figma",
       "link": "https://jobicy.com/jobs/142411-manager-customer-enablement",
       "description": "Figma is growing our team of passionate creatives and builders on a mission to make design accessible to all. Figma’s platform helps teams bring ideas to life—whether you're brainstorming, creating a prototype, translating designs into code, or iterating with AI. From idea to product, Figma empowers teams to streamline workflows, move faster, and work together in real time from anywhere in the world. If you're excited to shape the future of design and collaboration, join us! Our team of Customer Experience Managers (CEMs) work closely with some of Figma’s largest customers to drive engagement,",
       "pubDate": "2026-04-23T02:36:42+00:00",
-      "feedName": "Jobicy — enablement",
-      "source": "jobicy",
-      "score": null,
-      "matchReason": "",
-      "keyMatches": [],
-      "gaps": []
-    },
-    {
-      "id": "142297",
-      "title": "HR Workday Governance, Integration & Enablement Lead",
-      "company": "NielsenIQ",
-      "link": "https://jobicy.com/jobs/142297-hr-workday-governance-integration-enablement-lead",
-      "description": "Company Description #LI-Remote Job Description This role owns the operating model for how Workday work is requested, prioritized, and delivered across HR. Sitting between HR Centers of Excellence (COEs) and HR Technology, it translates business needs into well-defined requirements, manages dependencies between teams, and ensures Workday investment is sequenced against capacity and aligned to HR’s strategic priorities. Success looks like: every piece of Workday work coming through a consistent process, the HR roadmap reflecting real priorities and realistic timelines, HR teams building stronger",
-      "pubDate": "2026-04-22T01:55:39+00:00",
       "feedName": "Jobicy — enablement",
       "source": "jobicy",
       "score": null,

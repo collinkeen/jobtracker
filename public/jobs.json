@@ -1,6 +1,6 @@
 {
-  "fetchedAt": "2026-05-15T13:45:31.837Z",
-  "totalJobs": 21,
+  "fetchedAt": "2026-05-18T14:56:04.332Z",
+  "totalJobs": 18,
   "jobs": [
     {
       "id": "143892",
@@ -51,20 +51,6 @@
       "link": "https://jobicy.com/jobs/143590-director-scaled-customer-success",
       "description": "Who we are Samsara (NYSE: IOT) is the pioneer of the Connected Operations™ Cloud, which is a platform that enables organizations that depend on physical operations to harness Internet of Things (IoT) data to develop actionable insights and improve their operations. At Samsara, we are helping improve the safety, efficiency and sustainability of the physical operations that power our global economy. Representing more than 40% of global GDP, these industries are the infrastructure of our planet, including agriculture, construction, field services, transportation, and manufacturing — and we are ex",
       "pubDate": "2026-05-11T14:39:05+00:00",
-      "feedName": "Jobicy — director",
-      "source": "jobicy",
-      "score": null,
-      "matchReason": "",
-      "keyMatches": [],
-      "gaps": []
-    },
-    {
-      "id": "143421",
-      "title": "Associate Director, Marketing – Healthcare Professional (HCP) / Customer Adolescent (age 9-18) Strategy Lead for HPV",
-      "company": "MSD",
-      "link": "https://jobicy.com/jobs/143421-associate-director-marketing-healthcare-professional-hcp-customer-adolescent-age-9-18-strategy-lead-for-hpv",
-      "description": "Job Description Associate Director, Marketing – Healthcare Professional (HCP) Strategy Lead, HPV Adolescent Job Description in Primary Posting Language (Include Requirements for Education, Experience and Skills) Role Summary: The Associate Director, HCP Strategy Lead, owns the marketing strategy for the HPV Adolescent HCP segment in alignment with the brands opportunity spaces. This role drives the end-to-end HCP approach - from insight generation to strategy development, path-to-recommendation, and content & channel plans through omnichannel (Sales Force and NPP) delivery - to increase intent",
-      "pubDate": "2026-05-08T16:29:10+00:00",
       "feedName": "Jobicy — director",
       "source": "jobicy",
       "score": null,
@@ -185,20 +171,6 @@
       "gaps": []
     },
     {
-      "id": "142513",
-      "title": "Director, Data Science",
-      "company": "Infor",
-      "link": "https://jobicy.com/jobs/142513-director-data-science",
-      "description": "General information Country United States State Georgia City Remote Location Job ID 48678 Department Sales Experience Level DIRECTOR Employment Status FULL_TIME Workplace Type Hybrid Description & Requirements The Data Science Director is accountable for establishing and scaling deep analytics and predictive intelligence capabilities across the enterprise to increase both the operational effectiveness and efficiencies of our internal functions. In this role, you will define where machine learning creates value, build the team and infrastructure to deliver it, and embed data science models & to",
-      "pubDate": "2026-04-24T15:07:27+00:00",
-      "feedName": "Jobicy — director",
-      "source": "jobicy",
-      "score": null,
-      "matchReason": "",
-      "keyMatches": [],
-      "gaps": []
-    },
-    {
       "id": "142365",
       "title": "Sr. Director of Process Optimization",
       "company": "Revecore",
@@ -261,20 +233,6 @@
       "link": "https://jobicy.com/jobs/142411-manager-customer-enablement",
       "description": "Figma is growing our team of passionate creatives and builders on a mission to make design accessible to all. Figma’s platform helps teams bring ideas to life—whether you're brainstorming, creating a prototype, translating designs into code, or iterating with AI. From idea to product, Figma empowers teams to streamline workflows, move faster, and work together in real time from anywhere in the world. If you're excited to shape the future of design and collaboration, join us! Our team of Customer Experience Managers (CEMs) work closely with some of Figma’s largest customers to drive engagement,",
       "pubDate": "2026-04-23T02:36:42+00:00",
-      "feedName": "Jobicy — enablement",
-      "source": "jobicy",
-      "score": null,
-      "matchReason": "",
-      "keyMatches": [],
-      "gaps": []
-    },
-    {
-      "id": "142050",
-      "title": "DevOps Enablement Engineer / SDLC Lead",
-      "company": "ECS",
-      "link": "https://jobicy.com/jobs/142050-devops-enablement-engineer-sdlc-lead",
-      "description": "ECS is seeking a DevOps Enablement Engineer / SDLC Lead to work remotely . Position Summary ECS DevLabs is seeking a DevOps Enablement Engineer who will serve as the primary point of engagement between ECS development teams and the DevLabs platform. This role combines hands-on DevSecOps enablement with product ownership responsibilities — understanding what ECS teams actually need to deliver successfully, translating those needs into platform requirements, and ensuring the SDLC ecosystem evolves to meet real-world demand. You will own the intake process for development team onboarding, gather ",
-      "pubDate": "2026-04-17T16:50:34+00:00",
       "feedName": "Jobicy — enablement",
       "source": "jobicy",
       "score": null,

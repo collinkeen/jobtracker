@@ -1,7 +1,21 @@
 {
-  "fetchedAt": "2026-05-19T14:39:58.333Z",
-  "totalJobs": 18,
+  "fetchedAt": "2026-05-20T14:39:37.546Z",
+  "totalJobs": 19,
   "jobs": [
+    {
+      "id": "144247",
+      "title": "Director Core Systems Strategies – QNXT/NetworX",
+      "company": "Molina Healthcare",
+      "link": "https://jobicy.com/jobs/144247-director-core-systems-strategies-qnxt-networx",
+      "description": "JOB DESCRIPTION Job Summary Leads and directs team responsible for configuration activities including accurate and timely implementation and maintenance of critical information on claims databases, validation of data stored on databases, and adherence to health plan business and system requirements as it pertains to contracting, benefits, prior authorizations, fee schedules and other business requirements. Essential Job Duties • Directs configuration team, and demonstrates accountability for team performance - including meeting or exceeding established performance targets; targets may be based",
+      "pubDate": "2026-05-19T16:54:46+00:00",
+      "feedName": "Jobicy — director",
+      "source": "jobicy",
+      "score": null,
+      "matchReason": "",
+      "keyMatches": [],
+      "gaps": []
+    },
     {
       "id": "143892",
       "title": "Technical Solutions Director",

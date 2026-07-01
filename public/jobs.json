@@ -1,7 +1,21 @@
 {
-  "fetchedAt": "2026-06-30T13:59:08.363Z",
+  "fetchedAt": "2026-07-01T14:11:58.698Z",
   "totalJobs": 25,
   "jobs": [
+    {
+      "id": "148198",
+      "title": "Director I, Data Science Product Management",
+      "company": "Liberty Mutual",
+      "link": "https://jobicy.com/jobs/148198-director-i-data-science-product-management",
+      "description": "Description About the Team The Enterprise Data & Data Science organization provides centralized product, platform, and technology support for Data Science teams across Liberty Mutual. Our team focuses on enabling the development, deployment, and adoption of AI/ML solutions through shared platforms, reusable capabilities, and enterprise-scale data science practices. We partner closely with Data Scientists, Engineers, Architects, and business stakeholders to accelerate innovation, improve operational efficiency, and help deliver business value through AI and machine learning. Description The Dir",
+      "pubDate": "2026-07-01T02:13:31+00:00",
+      "feedName": "Jobicy — director",
+      "source": "jobicy",
+      "score": null,
+      "matchReason": "",
+      "keyMatches": [],
+      "gaps": []
+    },
     {
       "id": "145003",
       "title": "Director of Finance",
@@ -261,20 +275,6 @@
       "link": "https://jobicy.com/jobs/144465-director-sai-business-partner-expanded-verticals-team-2",
       "description": "Company Description R25_0030637 *US role--Must be in US at time off application to be considered. **This is a commission-based selling role that offers a base compensation in addition to a sales-based incentive tied to annual revenue generation vs. target. #LI-Remote Job Description This role is accountable for overseeing a segment of NielsenIQ North America Strategic Analytics & Insights (SA&I) end-to-end sales process across our entire SA&I portfolio which includes Consumer Behavior & Insights, Innovation, Brand & Media, and Analytics & Activation solutions. This entails creating a portfolio",
       "pubDate": "2026-06-23T02:56:44+00:00",
-      "feedName": "Jobicy — director",
-      "source": "jobicy",
-      "score": null,
-      "matchReason": "",
-      "keyMatches": [],
-      "gaps": []
-    },
-    {
-      "id": "144383",
-      "title": "Industry Sales Director - Security, Surveillance & Video Connectivity (US)",
-      "company": "Webbing",
-      "link": "https://jobicy.com/jobs/144383-industry-sales-director-security-surveillance-video-connectivity-us",
-      "description": "Description About Webbing Webbing delivers carrier-grade, software-driven, AI-powered global cellular connectivity for mission-critical environments. We power real-time video, data, and decisions across 600+ networks in 190+ countries—from physical security and public safety to broadcast and smart infrastructure. The Opportunity We are building a leadership position in the global physical security, surveillance, and video connectivity market—a multi-billion dollar, high-growth space driven by AI, edge video, and real-time data. From preventing enterprise loss and liability to enabling first re",
-      "pubDate": "2026-06-22T11:16:41+00:00",
       "feedName": "Jobicy — director",
       "source": "jobicy",
       "score": null,

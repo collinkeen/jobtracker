@@ -1,7 +1,21 @@
 {
-  "fetchedAt": "2026-07-01T14:11:58.698Z",
+  "fetchedAt": "2026-07-02T13:40:19.289Z",
   "totalJobs": 25,
   "jobs": [
+    {
+      "id": "148333",
+      "title": "Director I, Data Science, Enterprise Data & Data Science",
+      "company": "Liberty Mutual",
+      "link": "https://jobicy.com/jobs/148333-director-i-data-science-enterprise-data-data-science",
+      "description": "Description We're seeking an exceptional, hands-on Data Scientist with deep expertise in data science, MLOps, and building GenAI solutions to join our Enterprise Data & Data Science team. In this role, you'll identify, evaluate, and develop solutions at the intersection of data science, generative AI, and enterprise data strategy—including GenAI evaluation frameworks and semantic data layers. You'll also serve as a community champion, driving the adoption of best practices across a large, collaborative data science organization. Responsibilities : Design, build, and evaluate generative AI solu",
+      "pubDate": "2026-07-02T04:07:45+00:00",
+      "feedName": "Jobicy — director",
+      "source": "jobicy",
+      "score": null,
+      "matchReason": "",
+      "keyMatches": [],
+      "gaps": []
+    },
     {
       "id": "148198",
       "title": "Director I, Data Science Product Management",
@@ -261,20 +275,6 @@
       "link": "https://jobicy.com/jobs/147490-director-of-partner-marketing",
       "description": "Cresta unlocks the true potential of the customer experience, turning every conversation into a competitive advantage. Cresta’s unified AI platform combines conversational AI agents, real-time human agent augmentation, and comprehensive conversation intelligence to drive revenue and efficiency gains across every channel. The world’s leading companies, including United Airlines, Cox Communications, and Marriott, use Cresta to power world-class customer experiences every day. Born from the Stanford AI Lab, Cresta has raised more than $270 million from the world’s leading investors, including a16",
       "pubDate": "2026-06-23T05:09:36+00:00",
-      "feedName": "Jobicy — director",
-      "source": "jobicy",
-      "score": null,
-      "matchReason": "",
-      "keyMatches": [],
-      "gaps": []
-    },
-    {
-      "id": "144465",
-      "title": "Director, SA&I Business Partner (Expanded Verticals Team)",
-      "company": "NielsenIQ",
-      "link": "https://jobicy.com/jobs/144465-director-sai-business-partner-expanded-verticals-team-2",
-      "description": "Company Description R25_0030637 *US role--Must be in US at time off application to be considered. **This is a commission-based selling role that offers a base compensation in addition to a sales-based incentive tied to annual revenue generation vs. target. #LI-Remote Job Description This role is accountable for overseeing a segment of NielsenIQ North America Strategic Analytics & Insights (SA&I) end-to-end sales process across our entire SA&I portfolio which includes Consumer Behavior & Insights, Innovation, Brand & Media, and Analytics & Activation solutions. This entails creating a portfolio",
-      "pubDate": "2026-06-23T02:56:44+00:00",
       "feedName": "Jobicy — director",
       "source": "jobicy",
       "score": null,
